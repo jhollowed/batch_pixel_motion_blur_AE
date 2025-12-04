@@ -34,7 +34,7 @@ Finally, export the clip. Choose your preferred Render Settings, and set the Out
 
 With this confirmed, we are ready to start the batch process. Do
 
-   File > Scripts > Run Script File...
+    File > Scripts > Run Script File...
 
 and select 
 
