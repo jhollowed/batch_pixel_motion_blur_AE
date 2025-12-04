@@ -2,7 +2,7 @@ Use case:
 
 You're editing a long video in Premiere, and realize that you forgot your ND filters. Every single clip needs motion blur added. The only way to convincingly do this is with AE's Pixel Motion Blur (PMB). So you need to export every clip from Premiere, and send them to AE flor blurring. However, you also have basically no space left on your computer, and AE's PMB generates a massive cache for even a few seconds of high-resolution video. Here is the solution:
 
-###Step 1:
+### Step 1:
 
     python ./split_video_with_EDL.py
 
@@ -10,7 +10,7 @@ Takes a single, long video and an accompanying EDL from premiere, and splits the
 
 By default, all clips from this step will be output to the location `OUTPUT_FOLDER` specified in the script.
 
-###Step 2: 
+### Step 2: 
 
     python ./split_long_clips.py
 
@@ -18,7 +18,7 @@ For any clips generated in Step 1 that are longer than 5 seconds, chop it up int
 
 By default, all clips from this step will be output to the location `AE_READY_FOLDER` specified in the script. Any clips that are not long enough to require splitting are only symlinked to this folder. 
 
-###Step 3:
+### Step 3:
 
 We now need to prepare the AE environment. The script `apply pmb.jsx` works by being manually run on an existing project, which has a single clip in a composition with PMB applied and configured. The script renders one single clip from Step 2, then clears the cache, replaces the clip with the next one, and repeats. The PMB effect is retained in this process, and never needs to be touched again by the user or the script.The script makes several assumptions, including a composition name, source file name, and output module template name. 
 
@@ -42,7 +42,7 @@ and select
 
 If everything was done correctly, you should be able to watch each clip be rendered one by one in AE.
 
-###Step 4
+### Step 4
 
 When long clips are split into sub-clips in Step 2, the python script pads the beginning of each sub-clip (after the first) with 3 frames borrowed from the end of the previous sub-clip. This is done to preent artifacts in the motion blur applied at the start of each sub-clip (since PMB depends on the previous nighboring frames). These padded frames now need to be removed from the final output clips. Do
 
@@ -50,6 +50,6 @@ When long clips are split into sub-clips in Step 2, the python script pads the b
 
 By default, all clips from this step will be output to the location `OUTPUT_FOLDER` specified in the script. Any clips that did not need to have padded frames removed are only symlinked to this folder.
 
-###Caveats
+### Caveats
 
 This code may not work out of the box, depending on your use case. It is configured to ingest MP4 clips with a framerate of 30 fps, and output MP4s. If using a different file format, or a different framerate, the source code will be modified.
